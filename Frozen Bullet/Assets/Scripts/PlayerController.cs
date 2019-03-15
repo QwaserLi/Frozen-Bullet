@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public GameObject bullet;
     public float speed;
     public int health;
-
+	public PlayerDirectionController playerDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     void movement() {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
+		playerDirection.ChangeDirection(moveHorizontal);
 
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0);
         transform.position += (speed * movement * Time.deltaTime);

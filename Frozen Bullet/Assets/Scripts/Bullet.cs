@@ -19,18 +19,6 @@ public class Bullet : MonoBehaviour
         transform.position += move * Time.deltaTime;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log(damage);
-
-        if (collision.gameObject.tag == "Enemy")
-        {
-            //Do damage and destroy
-            Enemy e = collision.gameObject.GetComponent<Enemy>();
-            e.takeDamage(damage);
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(damage);
