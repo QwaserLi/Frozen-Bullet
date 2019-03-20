@@ -8,21 +8,25 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public int health;
 	public PlayerDirectionController playerDirection;
-
+	private float timer;
     // Start is called before the first frame update
     void Start()
     {
-
+		timer = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+		timer += Time.deltaTime;
         movement();
-        if (Input.GetKey(KeyCode.Space)) {
-            Fire();
-        }
-    }
+		if (Input.GetKey(KeyCode.Space)) {
+			if (timer > 1) {
+				Fire();
+				timer = 0;
+			}
+		}
+	}
 
 
     void movement() {
