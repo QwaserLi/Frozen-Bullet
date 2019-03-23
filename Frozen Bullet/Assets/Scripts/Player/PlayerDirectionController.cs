@@ -6,7 +6,6 @@ public class PlayerDirectionController : MonoBehaviour
 {
 	PlayerDirection playerDirection;
     Vector3 oldPlayerPosition;
-    bool positionChanged;
 
 	private void Start()
 	{
@@ -23,14 +22,6 @@ public class PlayerDirectionController : MonoBehaviour
     }
 
     public void changePosition(Vector3 newPosition) {
-        if (newPosition.Equals(transform.position))
-        {
-            positionChanged = false;
-        }
-        else {
-            positionChanged = true;
-
-        }
         oldPlayerPosition = transform.position;
         transform.position = newPosition;
     }

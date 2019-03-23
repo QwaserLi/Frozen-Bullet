@@ -97,7 +97,7 @@ MonoBehaviour:
   enemyBullet: {fileID: 6089008003419051311, guid: c1e3d901aa8f63349940ec86d5b96ecf,
     type: 3}
   health: 10
-  playerDirectionController: {fileID: 7926187376076270021, guid: 5f4eb2c1ccb88584d8dc31e1881372ca,
+  playerDirectionController: {fileID: 3299961318390037873, guid: 5f4eb2c1ccb88584d8dc31e1881372ca,
     type: 3}
 --- !u!61 &4490026094925794651
 BoxCollider2D:
