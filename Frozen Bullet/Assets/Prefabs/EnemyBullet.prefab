@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  playerDirectionController: {fileID: 3299961318390037873, guid: 5f4eb2c1ccb88584d8dc31e1881372ca,
-    type: 3}
 --- !u!1001 &1333651695533237919
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26,6 +24,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyBullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 3327738961717656027, guid: 7fd8a3d0bf521c44c9ce65e154dae609,
+        type: 3}
+      propertyPath: m_TagString
+      value: EnemyProjectile
       objectReference: {fileID: 0}
     - target: {fileID: 3462894697936331560, guid: 7fd8a3d0bf521c44c9ce65e154dae609,
         type: 3}

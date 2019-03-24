@@ -10,15 +10,11 @@ public class TestBoss : Enemy
         for (int i = 0; i < 5; i++) {
             EnemyBullet e = Instantiate(enemyBullet, transform.position, transform.rotation);
             
-            if (initialPosition == EnemyPosition.Left)
-            {
-                e.setBulletDirection(new Vector2(1, y));
-            }
-            else
-            {
+          
+            
                 e.setBulletDirection(new Vector2(-1, y));
 
-            }
+            
             y += 0.5f;
         }
     }

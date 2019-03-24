@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VisionConeController : MonoBehaviour
 {
+
     // Update is called once per frame
 
 
@@ -11,13 +12,9 @@ public class VisionConeController : MonoBehaviour
     {
     }
 
-    void Update()
+    void FixedUpdate()
     {
-
         transform.localRotation = transform.parent.rotation;
-
-
-
     }
 
     private void LateUpdate()
@@ -36,4 +33,52 @@ public class VisionConeController : MonoBehaviour
     }
 
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            //Do damage and destroy
+            Enemy e = collision.gameObject.GetComponent<Enemy>();
+            e.Freeze();
+        }
+
+        if (collision.gameObject.tag == "EnemyProjectile")
+        {
+            //Do damage and destroy
+            EnemyBullet e = collision.gameObject.GetComponent<EnemyBullet>();
+            e.Freeze();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            //Do damage and destroy
+            Enemy e = collision.gameObject.GetComponent<Enemy>();
+            e.UnFreeze();
+        }
+        if (collision.gameObject.tag == "EnemyProjectile")
+        {
+            //Do damage and destroy
+            EnemyBullet e = collision.gameObject.GetComponent<EnemyBullet>();
+            e.UnFreeze();
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            //Do damage and destroy
+            Enemy e = collision.gameObject.GetComponent<Enemy>();
+            e.Freeze();
+        }
+        if (collision.gameObject.tag == "EnemyProjectile")
+        {
+            //Do damage and destroy
+            EnemyBullet e = collision.gameObject.GetComponent<EnemyBullet>();
+            e.Freeze();
+        }
+    }
 }

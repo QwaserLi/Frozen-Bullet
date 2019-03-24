@@ -12,6 +12,7 @@ public class VisionCone : MonoBehaviour
 
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
+    float playerHealthPercentage;
 
     void Start()
     {
@@ -24,16 +25,19 @@ public class VisionCone : MonoBehaviour
     void LateUpdate()
     {
         DrawFieldOfView();
+        // Need to rotate here instead
     }
 
-    void DrawFieldOfView()
+    public void DrawFieldOfView()
     {
-        int stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
-        float stepAngleSize = viewAngle / stepCount;
+
+        float newAngle = viewAngle * GetComponent<PlayerController>().getHealthPercentage();
+        int stepCount = Mathf.RoundToInt(newAngle * meshResolution);
+        float stepAngleSize = newAngle / stepCount;
         List<Vector3> viewPoints = new List<Vector3>();
         for (int i = 0; i <= stepCount; i++)
         {
-            float angle = transform.eulerAngles.y - viewAngle / 2 + stepAngleSize * i;
+            float angle = transform.eulerAngles.y - newAngle / 2 + stepAngleSize * i;
             viewPoints.Add(getConePart(angle));
         }
 
@@ -53,8 +57,6 @@ public class VisionCone : MonoBehaviour
                 triangles[i * 3 + 2] = i + 2;
             }
         }
-
-       
 
         viewMesh.Clear();
         viewMesh.vertices = vertices;

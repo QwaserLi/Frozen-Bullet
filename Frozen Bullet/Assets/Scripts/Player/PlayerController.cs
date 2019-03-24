@@ -7,9 +7,8 @@ public class PlayerController : MonoBehaviour
     public Bullet bullet;
     public float speed;
     public float firerate;
-    public int health;
-
-    public PlayerDirectionController playerDirection;
+    public int MaximumnHealth;
+    int currentHealth;
 
     private float timer;
 
@@ -17,12 +16,12 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //playerDirection = GetComponent<PlayerDirectionController>();
 		timer = 0;
+        currentHealth = MaximumnHealth;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //Mouse Movement
         Vector3 mousePosition = Input.mousePosition;
@@ -31,7 +30,7 @@ public class PlayerController : MonoBehaviour
         Vector2 direction = new Vector2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y);
         transform.up = direction;
 
-        if (health <= 0) {
+        if (currentHealth <= 0) {
             Destroy(gameObject);
         }
         timer += Time.deltaTime;
@@ -42,17 +41,14 @@ public class PlayerController : MonoBehaviour
 				timer = 0;
 			}
 		}
-
-	}
+    }
 
 
     void movement() {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
-		playerDirection.ChangeDirection(moveHorizontal);
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0);
         transform.position += (speed * movement * Time.deltaTime);
-        playerDirection.changePosition(transform.position);
     }
 
     void Fire() {
@@ -60,6 +56,14 @@ public class PlayerController : MonoBehaviour
     }
 
     public void takeDamage(int damage) {
-        health -= damage;
+        currentHealth -= damage;
     }
+
+    public float getHealthPercentage() {
+
+        float ch = currentHealth;
+        float mh = MaximumnHealth;
+        return ch / mh;
+    }
+
 }

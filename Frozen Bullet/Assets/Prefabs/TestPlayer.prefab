@@ -99,9 +99,7 @@ MonoBehaviour:
   bullet: {fileID: 3271327521354255886, guid: 7fd8a3d0bf521c44c9ce65e154dae609, type: 3}
   speed: 4
   firerate: 0.3
-  health: 10
-  playerDirection: {fileID: 3299961318390037873, guid: 5f4eb2c1ccb88584d8dc31e1881372ca,
-    type: 3}
+  MaximumnHealth: 100
 --- !u!50 &7538073462817445215
 Rigidbody2D:
   serializedVersion: 4
