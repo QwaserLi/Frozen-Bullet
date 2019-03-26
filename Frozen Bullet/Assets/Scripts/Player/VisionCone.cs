@@ -10,15 +10,15 @@ public class VisionCone : MonoBehaviour
 
     public float meshResolution;
 
-    public MeshFilter viewMeshFilter;
-    Mesh viewMesh;
+    public MeshFilter viewConeFilter;
+    Mesh viewCone;
     float playerHealthPercentage;
 
     void Start()
     {
-        viewMesh = new Mesh();
-        viewMesh.name = "View Mesh";
-        viewMeshFilter.mesh = viewMesh;
+        viewCone = new Mesh();
+        viewCone.name = "View Mesh";
+        viewConeFilter.mesh = viewCone;
     }
 
 
@@ -58,10 +58,10 @@ public class VisionCone : MonoBehaviour
             }
         }
 
-        viewMesh.Clear();
-        viewMesh.vertices = vertices;
-        viewMesh.triangles = triangles;
-        viewMesh.RecalculateNormals();
+        viewCone.Clear();
+        viewCone.vertices = vertices;
+        viewCone.triangles = triangles;
+        viewCone.RecalculateNormals();
 
     }
 

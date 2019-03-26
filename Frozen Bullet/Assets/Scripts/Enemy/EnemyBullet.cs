@@ -6,8 +6,7 @@ public class EnemyBullet : MonoBehaviour
 {
     int damage = 10;
     public int speed;
-    bool keepGoing;
-    Vector2 bulletDirection =  new Vector2();
+    Vector2 bulletDirection;
     bool freeze;
     // Start is called before the first frame update
     void Start()
@@ -18,10 +17,10 @@ public class EnemyBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!freeze) {
-            Vector3 move = new Vector3(bulletDirection.x, bulletDirection.y, 0);
-            transform.position += move * Time.deltaTime * speed;
-        }
+        // if (!freeze) {
+        Vector3 move = new Vector3(bulletDirection.x, bulletDirection.y, 0);
+        transform.Translate(Vector3.Normalize(move) * speed * Time.deltaTime);
+        // }
     }
 
 
@@ -34,6 +33,7 @@ public class EnemyBullet : MonoBehaviour
             p.takeDamage(damage);
             Destroy(gameObject);
         }
+
     }
 
     public void setBulletDirection(Vector2 bulletDir)

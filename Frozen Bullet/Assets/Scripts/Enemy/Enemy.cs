@@ -6,12 +6,19 @@ public class Enemy : MonoBehaviour
 {
     public EnemyBullet enemyBullet;
     public int health;
+    public float shootingTimer;
+
     protected Vector2 moveDirection;
-    protected float timer;
     protected bool freeze;
+    protected ShootType shootingType;
+
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        shootingType = GetComponent<ShootType>();
+        shootingType.setShootingTimer(shootingTimer);
+        shootingType.setBullet(enemyBullet);
         moveDirection = new Vector2(0, Random.Range(-3f, 3f));
     }
 
@@ -27,32 +34,29 @@ public class Enemy : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        if (!freeze) {
+        if (!freeze)
+        {
             movement();
         }
     }
 
-    public virtual void movement() {
-   
-            Vector3 movement = new Vector3(moveDirection.x, moveDirection.y, 0);
-            transform.position += (movement * Time.deltaTime);
+    public virtual void movement()
+    {
 
-            if (transform.position.y >= 4 || transform.position.y <= -4) {
-                moveDirection = -moveDirection;
-            }
+        Vector3 movement = new Vector3(moveDirection.x, moveDirection.y, 0);
+        transform.position += (movement * Time.deltaTime);
 
-            //Shooting Timer
-            timer += Time.deltaTime;
+        if (transform.position.y >= 4 || transform.position.y <= -4)
+        {
+            moveDirection = -moveDirection;
+        }
 
-            if (timer > 0.3f)
-            {
-                Fire();
-                timer = 0;
-            }
-
+        shootingType.Fire();
+ 
     }
 
-    public virtual void takeDamage(int damage) {
+    public virtual void takeDamage(int damage)
+    {
         health -= damage;
     }
 
@@ -63,11 +67,13 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public void Freeze() {
+    public void Freeze()
+    {
         freeze = true;
     }
 
-    public void UnFreeze() {
+    public void UnFreeze()
+    {
         freeze = false;
     }
 }
