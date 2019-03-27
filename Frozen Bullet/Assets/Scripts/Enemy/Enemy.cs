@@ -19,7 +19,6 @@ public class Enemy : MonoBehaviour
         shootingType = GetComponent<ShootType>();
         shootingType.setShootingTimer(shootingTimer);
         shootingType.setBullet(enemyBullet);
-        moveDirection = new Vector2(0, Random.Range(-3f, 3f));
     }
 
     // Update is called once per frame
@@ -46,10 +45,10 @@ public class Enemy : MonoBehaviour
         Vector3 movement = new Vector3(moveDirection.x, moveDirection.y, 0);
         transform.position += (movement * Time.deltaTime);
 
-        if (transform.position.y >= 4 || transform.position.y <= -4)
-        {
-            moveDirection = -moveDirection;
-        }
+        //if (transform.position.y >= 4 || transform.position.y <= -4)
+        //{
+            //moveDirection = -moveDirection;
+        //}
 
         shootingType.Fire();
  
@@ -58,13 +57,6 @@ public class Enemy : MonoBehaviour
     public virtual void takeDamage(int damage)
     {
         health -= damage;
-    }
-
-    protected virtual void Fire()
-    {
-        EnemyBullet e = Instantiate(enemyBullet, transform.position, transform.rotation);
-        e.setBulletDirection(new Vector2(-1, 0));
-
     }
 
     public void Freeze()
@@ -76,4 +68,9 @@ public class Enemy : MonoBehaviour
     {
         freeze = false;
     }
+
+	public void SetMoveDirection(Vector2 movement) {
+		moveDirection = movement;
+
+	}
 }
