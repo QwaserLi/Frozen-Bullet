@@ -7,15 +7,21 @@ public class Enemy : MonoBehaviour
     public EnemyBullet enemyBullet;
     public int health;
     public float shootingTimer;
+    public int speed;
 
     protected Vector2 moveDirection;
     protected bool freeze;
     protected ShootType shootingType;
-
-
+    protected List<Vector3> MovePoints;
+    protected List<float> MovementDelay;
+    protected float moveTimer;
+    protected bool move;
+    protected int movementIndex;
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        move = true;
+        movementIndex = 0;
         shootingType = GetComponent<ShootType>();
         shootingType.setShootingTimer(shootingTimer);
         shootingType.setBullet(enemyBullet);
@@ -41,14 +47,39 @@ public class Enemy : MonoBehaviour
 
     public virtual void movement()
     {
+        if (MovePoints.Count == 0)
+        {
 
-        Vector3 movement = new Vector3(moveDirection.x, moveDirection.y, 0);
-        transform.position += (movement * Time.deltaTime);
+            Vector3 movement = new Vector3(moveDirection.x, moveDirection.y, 0);
+            transform.Translate(Vector3.Normalize(movement) * Time.deltaTime * speed);
+        }
+        else
+        {
+            if (movementIndex < MovePoints.Count) {
+                if (move)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, MovePoints[movementIndex], speed * Time.deltaTime);
+                    Debug.Log("huihi");
 
-        //if (transform.position.y >= 4 || transform.position.y <= -4)
-        //{
-            //moveDirection = -moveDirection;
-        //}
+                }
+
+                if (Vector3.Distance(transform.position, MovePoints[movementIndex]) < 0.001f)
+                {
+                    Debug.Log("The Time");
+                    move = false;
+                    moveTimer += Time.deltaTime;
+                    if (moveTimer >= MovementDelay[movementIndex])
+                    {
+                        Debug.Log("asds");
+
+                        move = true;
+                        moveTimer = 0;
+                        movementIndex++;
+                    }
+                }
+         
+            }
+        }
 
         shootingType.Fire();
  
@@ -73,4 +104,21 @@ public class Enemy : MonoBehaviour
 		moveDirection = movement;
 
 	}
+
+    public void SetSpeed(int speed)
+    {
+        this.speed = speed;
+
+    }
+
+    public void SetMovePoint(List<Vector3> movePoints) {
+        MovePoints = movePoints;
+
+    }
+
+    public void SetMovementDelay(List<float> moveDelay)
+    {
+        MovementDelay = moveDelay;
+
+    }
 }

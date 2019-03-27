@@ -98,7 +98,8 @@ MonoBehaviour:
   enemyBullet: {fileID: 6089008003419051311, guid: c1e3d901aa8f63349940ec86d5b96ecf,
     type: 3}
   health: 10
-  shootingTimer: 0.5
+  shootingTimer: 0.8
+  speed: 3
 --- !u!50 &820383954
 Rigidbody2D:
   serializedVersion: 4

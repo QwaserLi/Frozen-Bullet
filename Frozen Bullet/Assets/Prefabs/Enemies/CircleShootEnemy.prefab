@@ -99,6 +99,7 @@ MonoBehaviour:
     type: 3}
   health: 10
   shootingTimer: 1
+  speed: 3
 --- !u!50 &506644291
 Rigidbody2D:
   serializedVersion: 4

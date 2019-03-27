@@ -12,7 +12,7 @@ public class SpiralShootType : ShootType
         if (timer > ShootingTimer)
         {
             EnemyBullet a = Instantiate(eb, transform.position, transform.rotation);
-            a.setBulletDirection(DegreeToVector2(currentangle+=22.5f));
+            a.setBulletDirection(Utility.DegreeToVector2(currentangle+=22.5f));
 
             timer = 0;
         }

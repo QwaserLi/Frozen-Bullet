@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 3271327521354255886, guid: 7fd8a3d0bf521c44c9ce65e154dae609, type: 3}
   speed: 4
-  firerate: 0.3
+  firerate: 0.1
   MaximumnHealth: 100
 --- !u!50 &7538073462817445215
 Rigidbody2D:
@@ -162,7 +162,7 @@ MonoBehaviour:
   viewRadius: 4
   viewAngle: 90
   meshResolution: 1
-  viewMeshFilter: {fileID: 9151783532486302467}
+  viewConeFilter: {fileID: 0}
 --- !u!1001 &8475930292061819748
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -235,12 +235,6 @@ PrefabInstance:
 --- !u!4 &9151783532486302469 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 765936374259697761, guid: a52ae5b65ddf661478c804ced2c0a9ae,
-    type: 3}
-  m_PrefabInstance: {fileID: 8475930292061819748}
-  m_PrefabAsset: {fileID: 0}
---- !u!33 &9151783532486302467 stripped
-MeshFilter:
-  m_CorrespondingSourceObject: {fileID: 765936374259697767, guid: a52ae5b65ddf661478c804ced2c0a9ae,
     type: 3}
   m_PrefabInstance: {fileID: 8475930292061819748}
   m_PrefabAsset: {fileID: 0}
