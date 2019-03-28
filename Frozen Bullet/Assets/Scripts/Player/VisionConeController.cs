@@ -42,12 +42,20 @@ public class VisionConeController : MonoBehaviour
             e.Freeze();
         }
 
-        if (collision.gameObject.tag == "EnemyProjectile")
+        if (collision.gameObject.tag == "Spawner")
         {
             //Do damage and destroy
-            EnemyBullet e = collision.gameObject.GetComponent<EnemyBullet>();
-            e.Freeze();
+            EnemySpawner e = collision.gameObject.GetComponent<EnemySpawner>();
+            e.toggleInsight();
         }
+
+        //if (collision.gameObject.tag == "EnemyProjectile")
+        //{
+        //    //Do damage and destroy
+        //    EnemyBullet e = collision.gameObject.GetComponent<EnemyBullet>();
+        //    e.Freeze();
+        //}
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -58,12 +66,20 @@ public class VisionConeController : MonoBehaviour
             Enemy e = collision.gameObject.GetComponent<Enemy>();
             e.UnFreeze();
         }
-        if (collision.gameObject.tag == "EnemyProjectile")
+
+        if (collision.gameObject.tag == "Spawner")
         {
             //Do damage and destroy
-            EnemyBullet e = collision.gameObject.GetComponent<EnemyBullet>();
-            e.UnFreeze();
+            EnemySpawner e = collision.gameObject.GetComponent<EnemySpawner>();
+            e.toggleInsight();
         }
+
+        //if (collision.gameObject.tag == "EnemyProjectile")
+        //{
+        //    //Do damage and destroy
+        //    EnemyBullet e = collision.gameObject.GetComponent<EnemyBullet>();
+        //    e.UnFreeze();
+        //}
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -74,11 +90,11 @@ public class VisionConeController : MonoBehaviour
             Enemy e = collision.gameObject.GetComponent<Enemy>();
             e.Freeze();
         }
-        if (collision.gameObject.tag == "EnemyProjectile")
-        {
-            //Do damage and destroy
-            EnemyBullet e = collision.gameObject.GetComponent<EnemyBullet>();
-            e.Freeze();
-        }
+        //if (collision.gameObject.tag == "EnemyProjectile")
+        //{
+        //    //Do damage and destroy
+        //    EnemyBullet e = collision.gameObject.GetComponent<EnemyBullet>();
+        //    e.Freeze();
+        //}
     }
 }

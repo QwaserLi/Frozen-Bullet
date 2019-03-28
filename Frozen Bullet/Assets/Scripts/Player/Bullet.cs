@@ -11,17 +11,16 @@ public class Bullet : MonoBehaviour
     private void FixedUpdate()
     {
         transform.Translate(Vector3.up * speed * Time.deltaTime);
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
         if (collision.gameObject.tag == "Enemy")
         {
             //Do damage and destroy
             Enemy e = collision.gameObject.GetComponent<Enemy>();
             e.takeDamage(damage);
+            Destroy(gameObject);
         }
 
 		if (collision.gameObject.tag == "DestroyWall")

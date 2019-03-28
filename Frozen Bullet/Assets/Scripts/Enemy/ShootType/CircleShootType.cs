@@ -4,22 +4,20 @@ using UnityEngine;
 
 public class CircleShootType : ShootType
 {
+
+    float currentangle = 0;
+
     public override void Fire()
     {
         if (timer > ShootingTimer)
         {
 
-            for (float i = -1; i <= 1; i+=0.25f)
+            for (float i = 0; i < 20; i++)
             {
-                for (float j = -1; j <= 1; j += 0.25f)
-                {
-                    if (i == 0&& j == 0) {
-                        continue;
-                    }
-                    EnemyBullet a = Instantiate(eb, transform.position, transform.rotation);
-                    a.setBulletDirection(new Vector2(i, j));
+            
+                EnemyBullet a = Instantiate(eb, transform.position, transform.rotation);
+                a.setBulletDirection(Utility.DegreeToVector2(currentangle += 360/20));
 
-                }
             }
 
             timer = 0;

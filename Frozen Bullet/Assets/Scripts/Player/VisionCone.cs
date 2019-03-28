@@ -31,37 +31,41 @@ public class VisionCone : MonoBehaviour
     public void DrawFieldOfView()
     {
 
+
         float newAngle = viewAngle * GetComponent<PlayerController>().getHealthPercentage();
-        int stepCount = Mathf.RoundToInt(newAngle * meshResolution);
-        float stepAngleSize = newAngle / stepCount;
-        List<Vector3> viewPoints = new List<Vector3>();
-        for (int i = 0; i <= stepCount; i++)
-        {
-            float angle = transform.eulerAngles.y - newAngle / 2 + stepAngleSize * i;
-            viewPoints.Add(getConePart(angle));
-        }
 
-        int vertexCount = viewPoints.Count + 1;
-        Vector3[] vertices = new Vector3[vertexCount];
-        int[] triangles = new int[(vertexCount - 2) * 3];
-
-        vertices[0] = Vector3.zero;
-        for (int i = 0; i < vertexCount - 1; i++)
-        {
-            vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
-
-            if (i < vertexCount - 2)
+        if (newAngle > 0) {
+            int stepCount = Mathf.RoundToInt(newAngle * meshResolution);
+            float stepAngleSize = newAngle / stepCount;
+            List<Vector3> viewPoints = new List<Vector3>();
+            for (int i = 0; i <= stepCount; i++)
             {
-                triangles[i * 3] = 0;
-                triangles[i * 3 + 1] = i + 1;
-                triangles[i * 3 + 2] = i + 2;
+                float angle = transform.eulerAngles.y - newAngle / 2 + stepAngleSize * i;
+                viewPoints.Add(getConePart(angle));
             }
-        }
 
-        viewCone.Clear();
-        viewCone.vertices = vertices;
-        viewCone.triangles = triangles;
-        viewCone.RecalculateNormals();
+            int vertexCount = viewPoints.Count + 1;
+            Vector3[] vertices = new Vector3[vertexCount];
+            int[] triangles = new int[(vertexCount - 2) * 3];
+
+            vertices[0] = Vector3.zero;
+            for (int i = 0; i < vertexCount - 1; i++)
+            {
+                vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+
+                if (i < vertexCount - 2)
+                {
+                    triangles[i * 3] = 0;
+                    triangles[i * 3 + 1] = i + 1;
+                    triangles[i * 3 + 2] = i + 2;
+                }
+            }
+
+            viewCone.Clear();
+            viewCone.vertices = vertices;
+            viewCone.triangles = triangles;
+            viewCone.RecalculateNormals();
+        }
 
     }
 
