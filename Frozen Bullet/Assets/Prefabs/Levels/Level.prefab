@@ -49,3 +49,6 @@ MonoBehaviour:
   - {fileID: 820383955, guid: 4e7de1daa3d1c3743bf50ebc5967f421, type: 3}
   - {fileID: 506644292, guid: 4586a0eaf89110b4e98bb02ed3b4da28, type: 3}
   - {fileID: 417790241, guid: b07fe2c26fd17e348a6841947ce73444, type: 3}
+  - {fileID: 1929184706, guid: 775ada13f9f4f754a9ba5fe7252d8fba, type: 3}
+  LeftSpawners: []
+  RightSpawners: []

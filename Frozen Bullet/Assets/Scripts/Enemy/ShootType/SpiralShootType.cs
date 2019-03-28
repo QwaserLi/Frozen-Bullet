@@ -13,8 +13,10 @@ public class SpiralShootType : ShootType
         {
             EnemyBullet a = Instantiate(eb, transform.position, transform.rotation);
             a.setBulletDirection(Utility.DegreeToVector2(currentangle+=22.5f));
+			EnemyBullet b = Instantiate(eb, transform.position, transform.rotation);
+			b.setBulletDirection(Utility.DegreeToVector2(currentangle2 += 22.5f));
 
-            timer = 0;
+			timer = 0;
         }
     }
 

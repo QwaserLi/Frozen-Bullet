@@ -34,7 +34,13 @@ public class EnemyBullet : MonoBehaviour
             Destroy(gameObject);
         }
 
-    }
+		if (collision.gameObject.tag == "DestroyWall")
+		{ 
+			Destroy(gameObject);
+		}
+	}
+
+
 
     public void setBulletDirection(Vector2 bulletDir)
     {

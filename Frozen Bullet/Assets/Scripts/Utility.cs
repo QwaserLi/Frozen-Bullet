@@ -13,4 +13,8 @@ public class Utility : MonoBehaviour
     {
         return RadianToVector2(degree * Mathf.Deg2Rad);
     }
+
+	public static Vector3 getDirection(Vector3 start, Vector3 end) {
+		return end - start;
+	}
 }

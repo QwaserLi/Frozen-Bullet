@@ -23,5 +23,11 @@ public class Bullet : MonoBehaviour
             Enemy e = collision.gameObject.GetComponent<Enemy>();
             e.takeDamage(damage);
         }
-    }
+
+		if (collision.gameObject.tag == "DestroyWall")
+		{
+			//Do damage and destroy
+			Destroy(gameObject);
+		}
+	}
 }

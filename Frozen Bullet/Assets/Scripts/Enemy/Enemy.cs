@@ -14,17 +14,25 @@ public class Enemy : MonoBehaviour
     protected ShootType shootingType;
     protected List<Vector3> MovePoints;
     protected List<float> MovementDelay;
-    protected float moveTimer;
+	protected float moveTimer;
     protected bool move;
-    protected int movementIndex;
+	protected bool shoot;
+	protected bool moveShoot;
+
+	protected int movementIndex;
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        move = true;
+		//moveShoot = false;
+		//Move set to false for Testing 
+		//move = false;
+		move = true;
+		shoot = true;
         movementIndex = 0;
         shootingType = GetComponent<ShootType>();
         shootingType.setShootingTimer(shootingTimer);
         shootingType.setBullet(enemyBullet);
+
     }
 
     // Update is called once per frame
@@ -47,7 +55,7 @@ public class Enemy : MonoBehaviour
 
     public virtual void movement()
     {
-        if (MovePoints.Count == 0)
+        if (MovePoints == null || MovePoints.Count == 0)
         {
 
             Vector3 movement = new Vector3(moveDirection.x, moveDirection.y, 0);
@@ -55,37 +63,65 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            if (movementIndex < MovePoints.Count) {
+            if (movementIndex < MovePoints.Count ) {
                 if (move)
                 {
                     transform.position = Vector3.MoveTowards(transform.position, MovePoints[movementIndex], speed * Time.deltaTime);
-                    Debug.Log("huihi");
 
                 }
 
                 if (Vector3.Distance(transform.position, MovePoints[movementIndex]) < 0.001f)
                 {
-                    Debug.Log("The Time");
-                    move = false;
-                    moveTimer += Time.deltaTime;
-                    if (moveTimer >= MovementDelay[movementIndex])
-                    {
-                        Debug.Log("asds");
+					if (MovementDelay == null || MovementDelay.Count == 0)
+					{
+						movementIndex++;
+					}
+					else
+					{
+						move = false;
+						moveTimer += Time.deltaTime;
+						if (movementIndex < MovementDelay.Count)
+						{
+							if (moveTimer >= MovementDelay[movementIndex])
+							{
+								move = true;
+								moveTimer = 0;
+								movementIndex++;
 
-                        move = true;
-                        moveTimer = 0;
-                        movementIndex++;
-                    }
+							}
+						}
+					}
                 }
          
             }
         }
 
-        shootingType.Fire();
- 
+		if (moveShoot)
+		{
+			if (shoot && move)
+			{
+				shootingType.Fire();
+			}
+		}
+		else {
+			if (shoot && !move)
+			{
+				shootingType.Fire();
+			}
+
+		}
+	
     }
 
-    public virtual void takeDamage(int damage)
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.tag == "DestroyWall") {
+			health = 0;
+
+		}
+	}
+
+	public virtual void takeDamage(int damage)
     {
         health -= damage;
     }
@@ -119,6 +155,18 @@ public class Enemy : MonoBehaviour
     public void SetMovementDelay(List<float> moveDelay)
     {
         MovementDelay = moveDelay;
-
     }
+
+	public void toggleShootingTime(float time) {
+		Invoke("toggleShooting", time);
+	}
+
+	public void toggleShooting() {
+		shoot = !shoot;
+	}
+
+	public void shootWhileMoving(bool shootwhileMoving)
+	{
+		moveShoot = shootwhileMoving;
+	}
 }
