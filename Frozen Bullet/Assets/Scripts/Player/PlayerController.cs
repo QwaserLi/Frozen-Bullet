@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     int currentHealth;
 
     private float timer;
-
+	private bool isDamaged;
 
     // Start is called before the first frame update
     void Start()
@@ -62,8 +62,14 @@ public class PlayerController : MonoBehaviour
     }
 
     public void takeDamage(int damage) {
+		isDamaged = true;
         currentHealth -= damage;
+		Invoke("turnNotDamage", 0.1f);
     }
+
+	public void turnNotDamage() {
+		isDamaged = false;
+	}
 
     public float getHealthPercentage() {
 
@@ -71,5 +77,9 @@ public class PlayerController : MonoBehaviour
         float mh = MaximumnHealth;
         return ch / mh;
     }
+
+	public bool isPlayerDamaged() {
+		return isDamaged;
+	}
 
 }

@@ -5,14 +5,30 @@ using UnityEngine;
 public class VisionConeController : MonoBehaviour
 {
 
-    // Update is called once per frame
+	// Update is called once per frame
+	Color baseColor, damageColor;
+	Renderer rend;
 
-
-    private void Start()
+	private void Start()
     {
-    }
+		rend = GetComponent<Renderer>();
+		baseColor = new Color(0.4655588f, 1, 0, 0.4470588f);
+		damageColor = new Color(1f, 0, 0, 0.4470588f);
+	}
 
-    void FixedUpdate()
+	private void Update()
+	{
+		if (transform.parent.GetComponent<PlayerController>().isPlayerDamaged())
+		{
+			rend.material.SetColor("_Color", damageColor);
+		}
+		else
+		{
+			rend.material.SetColor("_Color", baseColor);
+		}
+	}
+
+	void FixedUpdate()
     {
         transform.localRotation = transform.parent.rotation;
     }

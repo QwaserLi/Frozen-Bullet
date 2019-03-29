@@ -14,15 +14,19 @@ public class VisionCone : MonoBehaviour
     Mesh viewCone;
     float playerHealthPercentage;
 
-    void Start()
+
+
+	void Start()
     {
         viewCone = new Mesh();
         viewCone.name = "View Mesh";
         viewConeFilter.mesh = viewCone;
-    }
 
 
-    void LateUpdate()
+	}
+
+
+	void LateUpdate()
     {
         DrawFieldOfView();
         // Need to rotate here instead
@@ -65,6 +69,8 @@ public class VisionCone : MonoBehaviour
             viewCone.vertices = vertices;
             viewCone.triangles = triangles;
             viewCone.RecalculateNormals();
+
+			
         }
 
     }

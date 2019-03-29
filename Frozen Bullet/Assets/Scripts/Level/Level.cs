@@ -64,9 +64,12 @@ public class Level : MonoBehaviour
 
         foreach (Enemy e in removeEnemies)
         {
-            HighScore += 200;
             currentEnemies.Remove(e);
-            HighScoreText.text = HighScore.ToString();
+			if (e.health > -10000 && e.health <= 0) {
+				HighScore += 200;
+
+			}
+			HighScoreText.text = HighScore.ToString();
         }
 
 
