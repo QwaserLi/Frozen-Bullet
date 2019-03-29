@@ -52,3 +52,5 @@ MonoBehaviour:
   - {fileID: 1929184706, guid: 775ada13f9f4f754a9ba5fe7252d8fba, type: 3}
   LeftSpawners: []
   RightSpawners: []
+  player: {fileID: 2820044414314387520, guid: 4923b6802e639b649b34a6bc11b273ac, type: 3}
+  HighScoreText: {fileID: 0}

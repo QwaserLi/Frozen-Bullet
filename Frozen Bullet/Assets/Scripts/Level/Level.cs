@@ -20,7 +20,7 @@ public class Level : MonoBehaviour
     private List<IEnumerable> sections;
     int currentSectionIndex;
     bool currentSectionEnded;
-   
+    PlayerController player;
     float spawnTimer;
     float spawnRate = 2.0f;
 
@@ -36,7 +36,7 @@ public class Level : MonoBehaviour
 
         currentEnemies = new List<Enemy>();
         sections = new List<IEnumerable>();
-
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         //Add all sections to section list 
 
         //sections.Add(StartSection1());
@@ -66,7 +66,9 @@ public class Level : MonoBehaviour
         {
             currentEnemies.Remove(e);
 			if (e.health > -10000 && e.health <= 0) {
-				HighScore += 200;
+                float scale = 1 +(1-player.getHealthPercentage());
+                float points = 200 * scale;
+				HighScore += (int)points;
 
 			}
 			HighScoreText.text = HighScore.ToString();
