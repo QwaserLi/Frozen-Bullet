@@ -2268,6 +2268,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3326bf7234f85214598e8e4b9a481da7, type: 2}
+    - target: {fileID: 2820044414314387520, guid: 4923b6802e639b649b34a6bc11b273ac,
+        type: 3}
+      propertyPath: MaximumnHealth
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4923b6802e639b649b34a6bc11b273ac, type: 3}
 --- !u!1 &1476676157

@@ -206,7 +206,7 @@ public class Level : MonoBehaviour
 
                 //Select Random Movement NOT IMPLEMENTED YET
 
-                EnemyMovement.MoveStopShootAndGo(e, t.position, !left);
+                EnemyMovement.MoveToPlayerThenGo(e, t.position, !left);
                 // Decide type of movement 
                 currentEnemies.Add(e);
 
