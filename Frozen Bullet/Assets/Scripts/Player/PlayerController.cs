@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public static int BulletTime;
     public static bool BulletTimeActivated;
-    public static int BulletTimeThreshold = 1;
+    public static int BulletTimeThreshold = 4;
     // Start is called before the first frame update
     void Start()
     {
