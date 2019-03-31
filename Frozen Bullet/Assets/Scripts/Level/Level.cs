@@ -17,34 +17,21 @@ public class Level : MonoBehaviour
     //4: Spiral Shoot
     //5: target player
     private List<Enemy> currentEnemies;
-    private List<IEnumerable> sections;
-    int currentSectionIndex;
-    bool currentSectionEnded;
     PlayerController player;
     float spawnTimer;
-    float spawnRate = 2.0f;
+    float spawnRate;
 
-    int HighScore;
-    public Text HighScoreText;
-
+    public static int HighScore;
+    int bulletTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentSectionIndex = 0;
-        currentSectionEnded = true;
 
+        spawnRate = 4.0f;
         currentEnemies = new List<Enemy>();
-        sections = new List<IEnumerable>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         //Add all sections to section list 
-
-        //sections.Add(StartSection1());
-        //sections.Add(StartSection2());
-        //sections.Add(StartSection3());
-        //sections.Add(TwoSpawnSection());
-        //sections.Add(TwoSpawnSection());
-        //sections.Add(TwoSpawnSection());
 
     }
 
@@ -65,35 +52,34 @@ public class Level : MonoBehaviour
         foreach (Enemy e in removeEnemies)
         {
             currentEnemies.Remove(e);
-			if (e.health > -10000 && e.health <= 0) {
-                float scale = 1 +(1-player.getHealthPercentage());
+            if (e.health > -10000 && e.health <= 0)
+            {
+                float scale = 1 + (1 - player.getHealthPercentage());
                 float points = 200 * scale;
-				HighScore += (int)points;
+                HighScore += (int)points;
 
-			}
-			HighScoreText.text = HighScore.ToString();
+            }
+            else if (e.health <= -10000) {
+                float scale = 1 + (1 - player.getHealthPercentage());
+                float points = 50 * scale;
+                HighScore += (int)points;
+            }
         }
 
 
         //Spawn Enemies
         SpawnEnemies();
 
-        //if (currentEnemies.Count == 0 || currentSectionEnded)
-        //{
-        //    currentSectionEnded = false;
-        //    if (currentSectionIndex < sections.Count)
-        //    {
-        //        StartCoroutine(sections[currentSectionIndex++].GetEnumerator());
-        //    }
-        //}
+
     }
 
-    void SpawnEnemies() {
+    void SpawnEnemies()
+    {
         spawnTimer += Time.deltaTime;
 
         if (spawnTimer >= spawnRate)
         {
-            int amtEnemy = Random.Range(1, 6);
+            int amtEnemy = getEnemiesSpawned();
             List<EnemySpawner> avaliableSpawners = new List<EnemySpawner>();
             List<EnemySpawner> selectedSpawners = new List<EnemySpawner>();
             List<int> spawnerIndex = new List<int>();
@@ -124,7 +110,7 @@ public class Level : MonoBehaviour
             {
                 if (avaliableSpawners.Count > 0)
                 {
-                    int randomSpawner = Random.Range(0, avaliableSpawners.Count - 1);
+                    int randomSpawner = Random.Range(0, avaliableSpawners.Count);
                     selectedSpawners.Add(avaliableSpawners[randomSpawner]);
                     selectedIndices.Add(spawnerIndex[randomSpawner]);
                     avaliableSpawners.RemoveAt(randomSpawner);
@@ -204,9 +190,8 @@ public class Level : MonoBehaviour
                 Enemy e = Instantiate(EnemyTypes[enemyType], t.position, t.rotation);
                 e.SetMoveDirection(new Vector2(-1, 0));
 
-                //Select Random Movement NOT IMPLEMENTED YET
-
-                EnemyMovement.MoveToPlayerThenGo(e, t.position, !left);
+                //Select Random Movement NEED TO IMPLEMENT ZIG ZAG
+                decideMovement(e, t.position, left);
                 // Decide type of movement 
                 currentEnemies.Add(e);
 
@@ -216,99 +201,124 @@ public class Level : MonoBehaviour
         }
     }
 
-    IEnumerable StartSection1()
-    {
-        for (int i = 0; i <= 5; i++)
-        {
-            Transform t = RightSpawners[i].transform;
-            Enemy e = Instantiate(EnemyTypes[5], t.position, t.rotation);
-            e.SetMoveDirection(new Vector2(-1, 0));
-            EnemyMovement.MoveStopShootAndGo(e, t.position, true);
-            // Decide type of movement 
-            currentEnemies.Add(e);
+    void decideMovement(Enemy e, Vector3 position, bool left) {
+        int movement = 0;
 
-            yield return new WaitForSeconds(0.2f);
+        if (HighScore <= 2000)
+        {
+            movement = 3;
+        }
+        else if (HighScore <= 5000)
+        {
+            movement = 4;
+        }
+        else if (HighScore <= 8000)
+        {
+            movement = 5;
+        }
+        else if (HighScore <= 15000)
+        {
+            movement = 5;
 
         }
-        yield return new WaitForSeconds(1.5f);
-
-
-        currentSectionEnded = true;
-    }
-
-    IEnumerable StartSection2()
-    {
-        for (int i = LeftSpawners.Length - 1; i >= 5; i--)
+        else if (HighScore <= 30000)
         {
-            Transform t = LeftSpawners[i].transform;
-            Enemy e = Instantiate(EnemyTypes[5], t.position, t.rotation);
-            e.SetMoveDirection(new Vector2(-1, 0));
-            EnemyMovement.MoveStopShootAndGo(e, t.position, false);
-            // Decide type of movement 
-            currentEnemies.Add(e);
-
-            yield return new WaitForSeconds(0.2f);
+            movement = 5;
         }
-        yield return new WaitForSeconds(3.0f);
-
-        currentSectionEnded = true;
-    }
-
-    IEnumerable StartSection3()
-    {
-        for (int i = 0; i <= 10; i += 10)
-        {
-            Transform t = RightSpawners[i].transform;
-            Enemy e = Instantiate(EnemyTypes[4], t.position, t.rotation);
-            e.SetMoveDirection(new Vector2(-1, 0));
-            EnemyMovement.MoveStopShootAndGoBack(e, t.position, true);
-
-            currentEnemies.Add(e);
-
+        else {
+            movement = 6;
         }
 
-        for (int i = LeftSpawners.Length - 1; i >= 0; i -= 10)
-        {
-            Transform t = LeftSpawners[i].transform;
-            Enemy e = Instantiate(EnemyTypes[4], t.position, t.rotation);
-            e.SetMoveDirection(new Vector2(1, 0));
-            EnemyMovement.MoveStopShootAndGoBack(e, t.position, false);
 
-            currentEnemies.Add(e);
+
+        int selectMovement = Random.Range(1, movement);
+
+        switch (selectMovement)
+        {
+            case 1:
+                EnemyMovement.MoveStopShootAndGo(e, position, !left);
+
+                break;
+            case 2:
+                EnemyMovement.MoveStopShootAndGoBack(e, position, !left);
+
+                break;
+            case 3:
+                EnemyMovement.MoveToMiddlethenVertical(e, position, !left);
+
+                break;
+            case 4:
+                EnemyMovement.MoveToPlayerThenGo(e, position, !left);
+                break;
+            case 5:
+                EnemyMovement.AngleMoveTwice(e, position, !left);
+                break;
+            default:
+                break;
+
 
         }
 
-        yield return new WaitForSeconds(3f);
 
-
-        currentSectionEnded = true;
     }
 
-    IEnumerable TwoSpawnSection()
-    {
+    int getEnemiesSpawned() {
+        int amt = 0;
+        if (HighScore <=2000) {
+            spawnRate = 3.0f;
 
-        int enemyType = Random.Range(0, EnemyTypes.Length);
+            amt = Random.Range(2, 5);
+        }
+        else if (HighScore <= 5000) {
+            spawnRate = 3.0f;
 
-        int spawner = Random.Range(0, RightSpawners.Length);
-        Transform t = RightSpawners[spawner].transform;
-        Enemy e = Instantiate(EnemyTypes[enemyType], t.position, t.rotation);
-        e.SetMoveDirection(new Vector2(-1, 0));
-        EnemyMovement.MoveStopShootAndGo(e, t.position, true);
-        currentEnemies.Add(e);
+            amt = Random.Range(2, 5);
 
+        }
+        else if (HighScore <= 8000)
+        {
+            spawnRate = 2.5f;
 
-        //DELAY
-        spawner = Random.Range(0, RightSpawners.Length);
-        t = LeftSpawners[spawner].transform;
-        e = Instantiate(EnemyTypes[enemyType], t.position, t.rotation);
-        e.SetMoveDirection(new Vector2(1, 0));
-        EnemyMovement.MoveStopShootAndGo(e, t.position, false);
-        currentEnemies.Add(e);
+            amt = Random.Range(3, 5);
 
+        }
+        else if (HighScore <= 15000)
+        {
+            spawnRate = 2.5f;
 
-        yield return new WaitForSeconds(3f);
+            amt = Random.Range(3, 5);
+        }
+        else if (HighScore <= 30000)
+        {
+            spawnRate = 2.5f;
 
-        currentSectionEnded = true;
+            amt = Random.Range(3, 6);
+        }
+        else if (HighScore <= 50000)
+        {
+            spawnRate = 2.5f;
+
+            amt = Random.Range(3, 7);
+        }
+        else if (HighScore <= 75000)
+        {
+            spawnRate = 2.5f;
+
+            amt = Random.Range(4, 7);
+        }
+        else if (HighScore <= 100000)
+        {
+            spawnRate = 2f;
+
+            amt = Random.Range(4, 8);
+        }
+        else if (HighScore >= 100000)
+        {
+            spawnRate = 2f;
+
+            amt = Random.Range(5, 9);
+        }
+
+        return amt;
     }
-
 }

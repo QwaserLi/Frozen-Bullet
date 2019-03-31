@@ -17,10 +17,10 @@ public class EnemyBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if (!freeze) {
-        Vector3 move = new Vector3(bulletDirection.x, bulletDirection.y, 0);
-        transform.Translate(Vector3.Normalize(move) * speed * Time.deltaTime);
-        // }
+         if (!freeze) {
+            Vector3 move = new Vector3(bulletDirection.x, bulletDirection.y, 0);
+             transform.Translate(Vector3.Normalize(move) * speed * Time.deltaTime);
+         }
     }
 
 

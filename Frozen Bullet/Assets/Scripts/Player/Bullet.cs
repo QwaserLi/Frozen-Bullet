@@ -21,6 +21,9 @@ public class Bullet : MonoBehaviour
             Enemy e = collision.gameObject.GetComponent<Enemy>();
             e.takeDamage(damage);
             Destroy(gameObject);
+            if (PlayerController.BulletTime < 15 && !PlayerController.BulletTimeActivated) {
+                PlayerController.BulletTime++;
+            }
         }
 
 		if (collision.gameObject.tag == "DestroyWall")

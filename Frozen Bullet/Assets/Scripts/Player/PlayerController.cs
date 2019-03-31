@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     private float timer;
 	private bool isDamaged;
 
+    [HideInInspector]
+    public static int BulletTime;
+    public static bool BulletTimeActivated;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +38,7 @@ public class PlayerController : MonoBehaviour
         }
         timer += Time.deltaTime;
         movement();
-		if (Input.GetKey(KeyCode.Space) ||Input.GetButton("Fire1")) {
+		if (Input.GetButton("Fire1")) {
 			if (timer > firerate) {
 				Fire();
 				timer = 0;
@@ -49,7 +52,6 @@ public class PlayerController : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0);
         transform.position += (speed * movement * Time.deltaTime);
-        // MAKE SURE TO CLAMP MOVEMENT
         float boundX = Mathf.Clamp(transform.position.x, -14, 14);
         float boundY = Mathf.Clamp(transform.position.y, -8, 8);
 
