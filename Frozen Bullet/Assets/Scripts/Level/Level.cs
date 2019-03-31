@@ -21,7 +21,7 @@ public class Level : MonoBehaviour
     float spawnTimer;
     float spawnRate;
 
-    public static int HighScore = 100000;
+    public static int HighScore = 0;
     public static bool playerIsDead;
 	bool gamePlaying;
 
@@ -47,6 +47,7 @@ public class Level : MonoBehaviour
             if (Input.GetKey(KeyCode.Space)) {
                 PlayerController.BulletTime = 0;
                 PlayerController.BulletTimeActivated = false;
+                PlayerController.BulletTimeThreshold = 20;
                 VisionCone.scaleWithHealth = true;
                 HighScore = 0;
                 playerIsDead = false;
@@ -302,12 +303,16 @@ public class Level : MonoBehaviour
         }
         else if (HighScore <= 15000)
         {
+            PlayerController.BulletTimeThreshold = 15;
+
             spawnRate = 2.5f;
 
             amt = Random.Range(3, 5);
         }
         else if (HighScore <= 30000)
         {
+            PlayerController.BulletTimeThreshold = 12;
+
             spawnRate = 2.5f;
 
             amt = Random.Range(3, 6);
@@ -320,12 +325,16 @@ public class Level : MonoBehaviour
         }
         else if (HighScore <= 75000)
         {
+            PlayerController.BulletTimeThreshold = 10;
+
             spawnRate = 2.5f;
 
             amt = Random.Range(4, 7);
         }
         else if (HighScore <= 100000)
         {
+            PlayerController.BulletTimeThreshold = 8;
+
             spawnRate = 2f;
 
             amt = Random.Range(4, 8);

@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     public int health;
     public float shootingTimer;
     public int speed;
-
+    public ParticleSystem deathEffect;
     protected Vector2 moveDirection;
     protected bool freeze;
     protected ShootType shootingType;
@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
+            Instantiate(deathEffect, transform.position, transform.rotation);
             Destroy(gameObject);
         }
     }

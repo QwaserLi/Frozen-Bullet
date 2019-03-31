@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float firerate;
     public int MaximumnHealth;
+    public ParticleSystem playerDeathEffect;
     int currentHealth;
 
     private float timer;
@@ -16,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public static int BulletTime;
     public static bool BulletTimeActivated;
-    public static int BulletTimeThreshold = 4;
+    public static int BulletTimeThreshold = 20;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +31,8 @@ public class PlayerController : MonoBehaviour
 
         if (currentHealth <= 0) {
             Level.playerIsDead = true;
+            Instantiate(playerDeathEffect, transform.position, transform.rotation);
+
             Destroy(gameObject);      
         }
 

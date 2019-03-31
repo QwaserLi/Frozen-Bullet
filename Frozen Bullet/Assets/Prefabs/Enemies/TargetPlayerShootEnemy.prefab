@@ -100,6 +100,8 @@ MonoBehaviour:
   health: 10
   shootingTimer: 1.5
   speed: 6
+  deathEffect: {fileID: 198542858128951202, guid: a759529588844cd478f2abc4ef8f4274,
+    type: 3}
 --- !u!50 &1929184705
 Rigidbody2D:
   serializedVersion: 4

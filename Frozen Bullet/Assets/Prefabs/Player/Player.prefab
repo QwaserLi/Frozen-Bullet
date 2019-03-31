@@ -52,6 +52,8 @@ MonoBehaviour:
   speed: 10
   firerate: 0.1
   MaximumnHealth: 200
+  playerDeathEffect: {fileID: 198986141733413592, guid: 00f05beda28cbb84f8216b24f051f7af,
+    type: 3}
 --- !u!50 &7538073462817445215
 Rigidbody2D:
   serializedVersion: 4
