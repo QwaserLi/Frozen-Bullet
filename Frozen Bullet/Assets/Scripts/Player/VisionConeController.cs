@@ -9,15 +9,22 @@ public class VisionConeController : MonoBehaviour
 	Color baseColor, damageColor;
 	Renderer rend;
     bool FreezeBullets;
+    CircleCollider2D bulletTimeCollider;
+    PolygonCollider2D polyCol;
 
-	private void Start()
+    private void Start()
     {
 		rend = GetComponent<Renderer>();
 		baseColor = new Color(0.4655588f, 1, 0, 0.4470588f);
 		damageColor = new Color(1f, 0, 0, 0.4470588f);
-	}
+        bulletTimeCollider = GetComponent<CircleCollider2D>();
+        bulletTimeCollider.enabled = false;
+        polyCol = GetComponent<PolygonCollider2D>();
 
-	private void Update()
+
+    }
+
+    private void Update()
 	{
 		if (transform.parent.GetComponent<PlayerController>().isPlayerDamaged())
 		{
@@ -31,11 +38,13 @@ public class VisionConeController : MonoBehaviour
 
 	void FixedUpdate()
     {
-        if (PlayerController.BulletTime == 15 && Input.GetKey(KeyCode.Space)) {
+        if (PlayerController.BulletTime == PlayerController.BulletTimeThreshold && Input.GetKey(KeyCode.Space)) {
             FreezeBullets = true;
-            transform.parent.GetComponent<VisionCone>().toggleScale();
+            VisionCone.scaleWithHealth = false;
             PlayerController.BulletTime = 0;
             PlayerController.BulletTimeActivated = true;
+            bulletTimeCollider.enabled = true;
+            polyCol.enabled = false;
             Invoke("resetBulletTime",3f);
         }
 		if (!PlayerController.BulletTimeActivated) {
@@ -45,18 +54,28 @@ public class VisionConeController : MonoBehaviour
 
     void resetBulletTime() {
         FreezeBullets = false;
-        transform.parent.GetComponent<VisionCone>().toggleScale();
+        VisionCone.scaleWithHealth = true;
         PlayerController.BulletTime = 0;
         PlayerController.BulletTimeActivated = false;
+        bulletTimeCollider.enabled = false;
+        polyCol.enabled = true;
+
+
 
     }
 
     private void LateUpdate()
     {
+        if (!PlayerController.BulletTimeActivated)
+        {
+            createColllider();
+        }
+    }
+
+    private void createColllider() {
         Mesh visioncone = GetComponent<MeshFilter>().mesh;
         Vector3[] vertices = visioncone.vertices;
         int vertexCount = vertices.Length;
-        PolygonCollider2D polyCol = GetComponent<PolygonCollider2D>();
 
         Vector2[] vert2D = new Vector2[vertexCount + 1];
         for (int i = 0; i < vertexCount; i++)

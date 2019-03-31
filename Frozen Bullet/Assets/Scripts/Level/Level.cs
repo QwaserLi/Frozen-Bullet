@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class Level : MonoBehaviour
@@ -21,7 +21,8 @@ public class Level : MonoBehaviour
     float spawnTimer;
     float spawnRate;
 
-    public static int HighScore;
+    public static int HighScore = 100000;
+    public static bool playerIsDead;
 	bool gamePlaying;
 
     // Start is called before the first frame update
@@ -38,9 +39,21 @@ public class Level : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-		if (gamePlaying) {		
+		if (gamePlaying && !playerIsDead) {		
 			runGame();
 		}
+
+        if (playerIsDead) {
+            if (Input.GetKey(KeyCode.Space)) {
+                PlayerController.BulletTime = 0;
+                PlayerController.BulletTimeActivated = false;
+                VisionCone.scaleWithHealth = true;
+                HighScore = 0;
+                playerIsDead = false;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+
+        }
     }
 
 	void runGame() {
@@ -65,7 +78,7 @@ public class Level : MonoBehaviour
 				HighScore += (int)points;
 
 			}
-			else if (e.health <= -10000)
+			else if (e.health == -10000)
 			{
 				float scale = 1 + (1 - player.getHealthPercentage());
 				float points = 50 * scale;
@@ -335,5 +348,17 @@ public class Level : MonoBehaviour
 			GetComponent<SpriteRenderer>().enabled = false;
 		}
 	}
+
+    void restart() {
+        gamePlaying = false;
+        spawnRate = 4.0f;
+        spawnTimer = 3.0f;
+        foreach (Enemy e in currentEnemies) {
+            e.health = -20000;
+        }
+
+        currentEnemies = new List<Enemy>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    }
 
 }

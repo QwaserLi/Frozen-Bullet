@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public static int BulletTime;
     public static bool BulletTimeActivated;
+    public static int BulletTimeThreshold = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,16 +27,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //Mouse Movement
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-        Vector2 direction = new Vector2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y);
-        transform.up = direction;
 
         if (currentHealth <= 0) {
-            Destroy(gameObject);
+            Level.playerIsDead = true;
+            Destroy(gameObject);      
         }
+
         timer += Time.deltaTime;
         movement();
 		if (Input.GetButton("Fire1")) {
@@ -48,6 +45,14 @@ public class PlayerController : MonoBehaviour
 
 
     void movement() {
+        //Mouse Movement
+
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+        Vector2 direction = new Vector2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y);
+        transform.up = direction;
+
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0);

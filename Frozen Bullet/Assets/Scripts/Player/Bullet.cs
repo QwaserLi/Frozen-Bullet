@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
             Enemy e = collision.gameObject.GetComponent<Enemy>();
             e.takeDamage(damage);
             Destroy(gameObject);
-            if (PlayerController.BulletTime < 15 && !PlayerController.BulletTimeActivated) {
+            if (PlayerController.BulletTime < PlayerController.BulletTimeThreshold && !PlayerController.BulletTimeActivated) {
                 PlayerController.BulletTime++;
             }
         }
