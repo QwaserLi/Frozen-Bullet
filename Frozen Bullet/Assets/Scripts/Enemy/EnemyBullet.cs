@@ -15,11 +15,11 @@ public class EnemyBullet : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void FixedUpdate()
+	{
          if (!freeze) {
             Vector3 move = new Vector3(bulletDirection.x, bulletDirection.y, 0);
-             transform.Translate(Vector3.Normalize(move) * speed * Time.deltaTime);
+             transform.Translate(Vector3.Normalize(move) * speed * Time.fixedDeltaTime);
          }
     }
 

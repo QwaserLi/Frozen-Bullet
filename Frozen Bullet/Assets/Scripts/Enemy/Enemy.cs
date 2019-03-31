@@ -60,14 +60,14 @@ public class Enemy : MonoBehaviour
         {
 
             Vector3 movement = new Vector3(moveDirection.x, moveDirection.y, 0);
-            transform.Translate(Vector3.Normalize(movement) * Time.deltaTime * speed);
+            transform.Translate(Vector3.Normalize(movement) * Time.fixedDeltaTime * speed);
         }
         else
         {
             if (movementIndex < MovePoints.Count ) {
                 if (move)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, MovePoints[movementIndex], speed * Time.deltaTime);
+                    transform.position = Vector3.MoveTowards(transform.position, MovePoints[movementIndex], speed * Time.fixedDeltaTime);
 
                 }
 
@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour
 					else
 					{
 						move = false;
-						moveTimer += Time.deltaTime;
+						moveTimer += Time.fixedDeltaTime;
 						if (movementIndex < MovementDelay.Count)
 						{
 							if (moveTimer >= MovementDelay[movementIndex])

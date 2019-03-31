@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);      
         }
 
-        timer += Time.deltaTime;
+		timer += Time.fixedDeltaTime;
         movement();
 		if (Input.GetButton("Fire1")) {
 			if (timer > firerate) {
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0);
-        transform.position += (speed * movement * Time.deltaTime);
+        transform.position += (speed * movement * Time.fixedDeltaTime);
         float boundX = Mathf.Clamp(transform.position.x, -14, 14);
         float boundY = Mathf.Clamp(transform.position.y, -8, 8);
 

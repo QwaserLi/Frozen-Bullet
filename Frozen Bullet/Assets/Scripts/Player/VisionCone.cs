@@ -16,6 +16,7 @@ public class VisionCone : MonoBehaviour
     public static bool scaleWithHealth;
 
 
+
 	void Start()
     {
         viewCone = new Mesh();
@@ -27,22 +28,22 @@ public class VisionCone : MonoBehaviour
 
     void LateUpdate()
     {
-        DrawFieldOfView();
-
+		//if (scaleWithHealth) {
+			DrawFieldOfView();
+		//}
         // Need to rotate here instead
     }
 
-    public void DrawFieldOfView()
+	public void DrawFieldOfView()
     {
         float newAngle;
         if (scaleWithHealth) {
             newAngle = viewAngle * GetComponent<PlayerController>().getHealthPercentage();
-
         }
         else {
             newAngle = 360;
         }
-
+		Debug.Log(newAngle);
         if (newAngle > 0) {
             int stepCount = Mathf.RoundToInt(newAngle * meshResolution);
             float stepAngleSize = newAngle / stepCount;
@@ -74,9 +75,11 @@ public class VisionCone : MonoBehaviour
             viewCone.vertices = vertices;
             viewCone.triangles = triangles;
             viewCone.RecalculateNormals();
-        }
+			viewConeFilter.mesh = viewCone;
 
-    }
+		}
+
+	}
 
 
     Vector3 getConePart(float angle)
