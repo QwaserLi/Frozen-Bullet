@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (BulletTime> BulletTimeThreshold) {
+            BulletTime = BulletTimeThreshold;
+        }
 
         if (currentHealth <= 0) {
             Level.playerIsDead = true;
