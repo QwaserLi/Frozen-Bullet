@@ -114,6 +114,11 @@ public class Enemy : MonoBehaviour
 	
     }
 
+    public Vector3 getMovementDirection() {
+            return Utility.getDirection(transform.position, MovePoints[movementIndex]);
+
+    }
+
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.gameObject.tag == "DestroyWall") {
@@ -170,4 +175,13 @@ public class Enemy : MonoBehaviour
 	{
 		moveShoot = shootwhileMoving;
 	}
+
+    public bool isMoving(){
+        return move;
+    }
+
+    public bool isFrozen()
+    {
+        return freeze;
+    }
 }

@@ -22,17 +22,17 @@ public class TargetPlayerShootType : ShootType
 
 	IEnumerator BurstShoot(Vector3 playerDirection) {
 
-		EnemyBullet a = Instantiate(eb, transform.position, transform.rotation);
+		EnemyBullet a = Instantiate(eb, transform.position, Quaternion.identity);
 		Vector2 bulletDir = new Vector2(playerDirection.x, playerDirection.y);
 		a.setBulletDirection(bulletDir);
 
 		yield return new WaitForSeconds(0.2f);
 
-		EnemyBullet b = Instantiate(eb, transform.position, transform.rotation);
+		EnemyBullet b = Instantiate(eb, transform.position, Quaternion.identity);
 		b.setBulletDirection(bulletDir + Utility.DegreeToVector2(-25));
 
 		yield return new WaitForSeconds(0.2f);
-		EnemyBullet c = Instantiate(eb, transform.position, transform.rotation);
+		EnemyBullet c = Instantiate(eb, transform.position, Quaternion.identity);
 		 c.setBulletDirection(bulletDir + Utility.DegreeToVector2(25));
 		yield return null;
 	}
