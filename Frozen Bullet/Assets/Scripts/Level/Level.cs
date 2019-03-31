@@ -22,56 +22,61 @@ public class Level : MonoBehaviour
     float spawnRate;
 
     public static int HighScore;
-    int bulletTime;
+	bool gamePlaying;
 
     // Start is called before the first frame update
     void Start()
     {
-
+		gamePlaying = false;
         spawnRate = 4.0f;
+		spawnTimer = 3.0f;
         currentEnemies = new List<Enemy>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        //Add all sections to section list 
+		player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
-    }
+	}
 
-    // Update is called once per frame
-    void Update()
+	// Update is called once per frame
+	void Update()
     {
-        //Clear Enemies
-        List<Enemy> removeEnemies = new List<Enemy>();
-
-        foreach (Enemy e in currentEnemies)
-        {
-            if (e.health <= 0)
-            {
-                removeEnemies.Add(e);
-            }
-        }
-
-        foreach (Enemy e in removeEnemies)
-        {
-            currentEnemies.Remove(e);
-            if (e.health > -10000 && e.health <= 0)
-            {
-                float scale = 1 + (1 - player.getHealthPercentage());
-                float points = 200 * scale;
-                HighScore += (int)points;
-
-            }
-            else if (e.health <= -10000) {
-                float scale = 1 + (1 - player.getHealthPercentage());
-                float points = 50 * scale;
-                HighScore += (int)points;
-            }
-        }
-
-
-        //Spawn Enemies
-        SpawnEnemies();
-
-
+		if (gamePlaying) {		
+			runGame();
+		}
     }
+
+	void runGame() {
+		//Clear Enemies
+		List<Enemy> removeEnemies = new List<Enemy>();
+
+		foreach (Enemy e in currentEnemies)
+		{
+			if (e.health <= 0)
+			{
+				removeEnemies.Add(e);
+			}
+		}
+
+		foreach (Enemy e in removeEnemies)
+		{
+			currentEnemies.Remove(e);
+			if (e.health > -10000 && e.health <= 0)
+			{
+				float scale = 1 + (1 - player.getHealthPercentage());
+				float points = 200 * scale;
+				HighScore += (int)points;
+
+			}
+			else if (e.health <= -10000)
+			{
+				float scale = 1 + (1 - player.getHealthPercentage());
+				float points = 50 * scale;
+				HighScore += (int)points;
+			}
+		}
+
+
+		//Spawn Enemies
+		SpawnEnemies();
+	}
 
     void SpawnEnemies()
     {
@@ -321,4 +326,14 @@ public class Level : MonoBehaviour
 
         return amt;
     }
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+
+		if (collision.gameObject.tag == "PlayerBullet" && !gamePlaying) {
+			gamePlaying = true;
+			GetComponent<SpriteRenderer>().enabled = false;
+		}
+	}
+
 }

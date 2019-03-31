@@ -38,8 +38,9 @@ public class VisionConeController : MonoBehaviour
             PlayerController.BulletTimeActivated = true;
             Invoke("resetBulletTime",3f);
         }
-
-        transform.localRotation = transform.parent.rotation;
+		if (!PlayerController.BulletTimeActivated) {
+			transform.localRotation = transform.parent.rotation;
+		}
     }
 
     void resetBulletTime() {
@@ -135,5 +136,11 @@ public class VisionConeController : MonoBehaviour
             EnemyBullet e = collision.gameObject.GetComponent<EnemyBullet>();
             e.Freeze();
         }
-    }
+		if (collision.gameObject.tag == "EnemyProjectile" && !FreezeBullets)
+		{
+			//Do damage and destroy
+			EnemyBullet e = collision.gameObject.GetComponent<EnemyBullet>();
+			e.UnFreeze();
+		}
+	}
 }
